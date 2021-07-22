@@ -5,6 +5,8 @@ import com.eldarian.solvdelivery.city.Street;
 import com.eldarian.solvdelivery.data.Database;
 import com.eldarian.solvdelivery.staff.Manager;
 import com.eldarian.solvdelivery.staff.contact.Operator;
+import com.eldarian.solvdelivery.staff.contact.PhoneOperator;
+import com.eldarian.solvdelivery.staff.contact.WebOperator;
 
 import javax.xml.crypto.Data;
 import java.io.FileInputStream;
@@ -17,10 +19,12 @@ public class Client {
         Manager manager = Database.getInstance().getManager();
         Operator operator = manager.provideOperator();
         if(operator == null) return;
-        sendOrderFromProperties(operator);
-
-//        Order order = operator.generateOrder();
-//        operator.confirmOrder(order);
+        if (operator instanceof WebOperator) {
+            sendOrderFromProperties(operator);
+            return;
+        }
+        Order order = operator.generateOrder();
+        operator.confirmOrder(order);
     }
 
     public void sendOrderFromProperties(Operator operator) {
@@ -32,11 +36,13 @@ public class Client {
             Order order = new Order();
             Database db = Database.getInstance();
             Restaurant restaurant = db.findRestaurant(properties.getProperty("restaurant"));
+            order.setId(Integer.parseInt(properties.getProperty("id")));
             order.setRestaurant(restaurant);
             order.setDish(restaurant.findDish(properties.getProperty("dish")));
             Street street = db.findStreet(properties.getProperty("street"));
             order.setDestination(street.getBuilding(Integer.parseInt(properties.getProperty("building"))));
 
+            order.saveAsJSON();
             operator.handleOrder(order);
         } catch (IOException e) {
             e.printStackTrace();
