@@ -1,0 +1,27 @@
+{
+    "id":555,
+    "restaurant":
+    {
+        "street":
+        {
+            "name":"Kalesnikava Street",
+            "buildingCount":12
+        },
+        "buildingNumber":7,
+        "name":"Perezmen",
+        "menu":
+            [
+                {"name":"pizza","price":5},
+                {"name":"burger","price":5},
+                {"name":"cola","price":5}
+            ]
+        },
+        "dish":
+            {"name":"pizza","price":5},
+            "destination":
+            {
+                "street":{"name":"Kalinouski Alley","buildingCount":8},
+                "buildingNumber":5
+            },
+            "valid":true
+}

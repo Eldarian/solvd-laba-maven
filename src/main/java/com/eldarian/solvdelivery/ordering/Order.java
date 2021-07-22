@@ -1,9 +1,13 @@
 package com.eldarian.solvdelivery.ordering;
 
+import com.eldarian.solvdelivery.json.JsonExecutor;
 import com.eldarian.solvdelivery.city.Building;
 import com.eldarian.solvdelivery.city.Restaurant;
+import org.apache.log4j.Logger;
 
 public class Order {
+	private static Logger logger = Logger.getLogger(Order.class);
+
 	int id;
 
 	private Restaurant restaurant;
@@ -16,6 +20,10 @@ public class Order {
 				", \nrestaurant=" + restaurant +
 				", \ndish=" + dish +
 				", \ndeliver to " + destination;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
     public void setRestaurant(Restaurant restaurant) {
@@ -32,5 +40,28 @@ public class Order {
 
 	public boolean isValid() {
 		return restaurant != null && dish != null && destination != null;
+	}
+
+
+	public int getId() {
+		return id;
+	}
+
+	public Restaurant getRestaurant() {
+		return restaurant;
+	}
+
+	public Dish getDish() {
+		return dish;
+	}
+
+	public Building getDestination() {
+		return destination;
+	}
+
+	public void saveAsJSON() {
+		logger.info("Saving to JSON...");
+		JsonExecutor jsonExecutor = new JsonExecutor();
+		jsonExecutor.convertPojoToJsonFile(this, "order" + id);
 	}
 }

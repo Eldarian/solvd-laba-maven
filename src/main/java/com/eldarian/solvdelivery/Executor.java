@@ -7,7 +7,7 @@ import org.apache.log4j.PropertyConfigurator;
 
 public class Executor {
 
-	static Logger logger = Logger.getLogger(Executor.class);
+	private static Logger logger = Logger.getLogger(Executor.class);
 	public static void main(String[] args) {
 		//PropertyConfigurator.configure("log4j.properties");
 		logger.info("logger configuration successful");

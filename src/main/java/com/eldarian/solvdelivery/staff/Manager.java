@@ -16,7 +16,7 @@ import java.util.Scanner;
 
 public class Manager extends Employee {
 
-    Logger logger = Logger.getLogger(Manager.class);
+    private static Logger logger = Logger.getLogger(Manager.class);
     private List<Courier> couriers;
     private List<Operator> operators;
     CityService cityService;
@@ -34,6 +34,7 @@ public class Manager extends Employee {
 
     public Manager(List couriers, List operators) {
         this.couriers = couriers;
+        this.operators = operators;
         this.operators = operators;
     }
 
