@@ -11,15 +11,31 @@ public class Street {
         this.name = name;
         buildings = new ArrayList<>();
         for (int i = 1; i <= buildingCount; i++) {
-            buildings.add(new Building(this, i));
+            buildings.add(new Building(name, i));
         }
+    }
+
+    public Street() {
+
     }
 
     public String getName() {
         return name;
     }
 
-    public int getBuildingCount() {
+    public void setBuildings(List<Building> buildings) {
+        this.buildings = buildings;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public List<Building> getBuildings() {
+        return buildings;
+    }
+
+    public int calculateBuildingCount() {
         if(buildings != null) { //QUESTION list of buildings initialized in constructor. Should I make null-check?
             return buildings.size();
         }

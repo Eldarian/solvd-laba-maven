@@ -20,7 +20,8 @@ public class Client {
         Operator operator = manager.provideOperator();
         if(operator == null) return;
         if (operator instanceof WebOperator) {
-            sendOrderFromProperties(operator);
+            //sendOrderFromProperties(operator);
+            sendOrderFromJSON(operator);
             return;
         }
         Order order = operator.generateOrder();
@@ -47,5 +48,10 @@ public class Client {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendOrderFromJSON(Operator operator) {
+        Order order = Order.readFromJSON("order555");
+        operator.handleOrder(order);
     }
 }

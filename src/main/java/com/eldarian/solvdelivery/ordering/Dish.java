@@ -13,6 +13,10 @@ public class Dish {
         this.price = 5;
     }
 
+    public Dish() {
+
+    }
+
     public String getName() {
         return name;
     }
@@ -20,5 +24,13 @@ public class Dish {
     @Override
     public String toString() {
         return name + ", " + price + "$";
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
     }
 }

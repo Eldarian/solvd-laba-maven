@@ -1,5 +1,8 @@
-package com.eldarian.solvdelivery.json;
+package com.eldarian.solvdelivery.utils;
 
+import com.eldarian.solvdelivery.ordering.Order;
+import com.fasterxml.jackson.core.JsonParseException;
+import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.log4j.Logger;
 
@@ -10,20 +13,24 @@ public class JsonExecutor {
 
     private Logger logger = Logger.getLogger(JsonExecutor.class);
 
-    public void convertPojoToJsonFile(Object obj, String pathToFile) {
+    public void convertPojoToJsonFile(Order obj, String pathToFile) {
         try {
             ObjectMapper mapper = new ObjectMapper();
             mapper.writer().writeValue(Paths.get(pathToFile).toFile(), obj);
+        } catch (JsonMappingException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public Object readPojoFromJsonFile(String pathToFile) {
-        Object obj = null;
+    public Order readOrderPojoFromJsonFile(String pathToFile) {
+        Order obj = null;
         try {
             ObjectMapper mapper = new ObjectMapper();
-            obj = mapper.reader().readValue(Paths.get(pathToFile).toFile());
+            obj = mapper.reader().readValue(Paths.get(pathToFile).toFile(), Order.class);
+        } catch (JsonParseException e) {
+            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }

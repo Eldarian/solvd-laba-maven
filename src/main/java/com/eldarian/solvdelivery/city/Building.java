@@ -3,15 +3,15 @@ package com.eldarian.solvdelivery.city;
 import java.util.Objects;
 
 public class Building {
-    private Street street;
+    private String streetName;
     private int buildingNumber;
 
-    private Building() {
+    public Building() {
 
     }
 
-    public Building(Street street, int buildingNumber) {
-        this.street = street;
+    public Building(String streetName, int buildingNumber) {
+        this.streetName = streetName;
         this.buildingNumber = buildingNumber;
     }
 
@@ -19,14 +19,14 @@ public class Building {
         return buildingNumber;
     }
 
-    public Street getStreet() {
-        return street;
-    }
+//    public Street getStreet() {
+//        return street;
+//    }
 
     @Override
     public String toString() {
         return "Building{" +
-                "street=" + street.getName() +
+                "street=" + streetName +
                 ", buildingNumber=" + buildingNumber +
                 '}';
     }
@@ -36,11 +36,15 @@ public class Building {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Building building = (Building) o;
-        return buildingNumber == building.buildingNumber && street.equals(building.street);
+        return buildingNumber == building.buildingNumber && streetName.equals(building.streetName);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(street, buildingNumber);
+        return Objects.hash(streetName, buildingNumber);
+    }
+
+    public void setBuildingNumber(int buildingNumber) {
+        this.buildingNumber = buildingNumber;
     }
 }

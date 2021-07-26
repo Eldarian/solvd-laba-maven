@@ -1,6 +1,6 @@
 package com.eldarian.solvdelivery.ordering;
 
-import com.eldarian.solvdelivery.json.JsonExecutor;
+import com.eldarian.solvdelivery.utils.JsonExecutor;
 import com.eldarian.solvdelivery.city.Building;
 import com.eldarian.solvdelivery.city.Restaurant;
 import org.apache.log4j.Logger;
@@ -38,7 +38,7 @@ public class Order {
 		this.destination = destination;
 	}
 
-	public boolean isValid() {
+	public boolean checkIsValid() {
 		return restaurant != null && dish != null && destination != null;
 	}
 
@@ -63,5 +63,11 @@ public class Order {
 		logger.info("Saving to JSON...");
 		JsonExecutor jsonExecutor = new JsonExecutor();
 		jsonExecutor.convertPojoToJsonFile(this, "order" + id);
+	}
+
+	public static Order readFromJSON(String pathToFile) {
+		logger.info("Reading from JSON...");
+		JsonExecutor jsonExecutor = new JsonExecutor();
+		return jsonExecutor.readOrderPojoFromJsonFile(pathToFile);
 	}
 }
