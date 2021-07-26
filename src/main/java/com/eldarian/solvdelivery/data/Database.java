@@ -68,10 +68,10 @@ public class Database implements CityService {
         meatingMenu.add(new Dish("meatballs"));
         meatingMenu.add(new Dish("pork kebab"));
 
-        Restaurant perezmen = new Restaurant(kalesnikava, 7, "Perezmen", perezmenMenu);
-        Restaurant freedomster = new Restaurant(kalinouski, 3, "Freedomster", freedomsterMenu);
-        Restaurant meating = new Restaurant(skaryna, 9, "Meating", meatingMenu);
-        Restaurant emptiness = new Restaurant(skaryna, 1, "Emply", null);
+        Restaurant perezmen = new Restaurant(kalesnikava.getName(), 7, "Perezmen", perezmenMenu);
+        Restaurant freedomster = new Restaurant(kalinouski.getName(), 3, "Freedomster", freedomsterMenu);
+        Restaurant meating = new Restaurant(skaryna.getName(), 9, "Meating", meatingMenu);
+        Restaurant emptiness = new Restaurant(skaryna.getName(), 1, "Emply", null);
 
         restaurants = new ArrayList<>();
         restaurants.add(perezmen);

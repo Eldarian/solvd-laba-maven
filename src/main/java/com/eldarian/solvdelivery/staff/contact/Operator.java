@@ -12,10 +12,8 @@ import com.eldarian.solvdelivery.staff.Manager;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.nio.Buffer;
 import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.function.Predicate;
 
 public abstract class Operator extends Employee {
     private Manager manager;
@@ -37,7 +35,7 @@ public abstract class Operator extends Employee {
 
     @Override
     public boolean canHandleOrder(Order order) {
-        if(order.isValid()) {
+        if(order.checkIsValid()) {
             return manager.canHandleOrder(order);
         }
         return false;
@@ -144,7 +142,7 @@ public abstract class Operator extends Employee {
     private void chooseDestination(Order order) {
         Street street = chooseStreet();
         Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your address (Building number) " + street.getBuildingCount() + " buildings total:");
+        System.out.println("Enter your address (Building number) " + street.calculateBuildingCount() + " buildings total:");
         Building destination = findBuilding(street, scanner.nextInt());
         order.setDestination(destination);
     }

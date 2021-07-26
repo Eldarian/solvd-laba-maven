@@ -9,9 +9,21 @@ public class Restaurant extends Building implements RestaurantService {
     private String name;
     private List<Dish> menu;
 
-    public Restaurant(Street street, int buildingNumber, String name, List<Dish> menu) {
+    public Restaurant(String street, int buildingNumber, String name, List<Dish> menu) {
         super(street, buildingNumber);
         this.name = name;
+        this.menu = menu;
+    }
+
+    public Restaurant(){
+        super();
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setMenu(List<Dish> menu) {
         this.menu = menu;
     }
 
@@ -36,7 +48,7 @@ public class Restaurant extends Building implements RestaurantService {
 
     @Override
     public String toString() {
-        return name + " on " + getStreet().getName() +
+        return name +
                 ", " + getBuildingNumber();
     }
 
