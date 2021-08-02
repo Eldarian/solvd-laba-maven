@@ -1,4 +1,4 @@
-package com.eldarian.solvdelivery.data;
+package com.eldarian.solvdelivery.database;
 
 import com.eldarian.solvdelivery.city.Building;
 import com.eldarian.solvdelivery.city.Restaurant;
@@ -13,22 +13,22 @@ import com.eldarian.solvdelivery.staff.delivery.FootCourier;
 
 import java.util.*;
 
-//temporary class, will be replaced with sql or smth.
-public class Database implements CityService {
+//temporary class, will be replaced with sql
+public class DatabaseEmulator implements CityService {
     private List<Manager> managers;
     private List<Restaurant> restaurants;
     private Map<String, Street> streets;
 
-    private static Database instance;
+    private static DatabaseEmulator instance;
 
-    private Database() {
+    private DatabaseEmulator() {
         initCity();
         initStaff();
     }
 
-    public static Database getInstance() {
+    public static DatabaseEmulator getInstance() {
         if (instance == null) {
-            instance = new Database();
+            instance = new DatabaseEmulator();
         }
         return instance;
     }

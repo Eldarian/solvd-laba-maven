@@ -2,13 +2,11 @@ package com.eldarian.solvdelivery.ordering;
 
 import com.eldarian.solvdelivery.city.Restaurant;
 import com.eldarian.solvdelivery.city.Street;
-import com.eldarian.solvdelivery.data.Database;
+import com.eldarian.solvdelivery.database.DatabaseEmulator;
 import com.eldarian.solvdelivery.staff.Manager;
 import com.eldarian.solvdelivery.staff.contact.Operator;
-import com.eldarian.solvdelivery.staff.contact.PhoneOperator;
 import com.eldarian.solvdelivery.staff.contact.WebOperator;
 
-import javax.xml.crypto.Data;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
@@ -16,7 +14,7 @@ import java.util.Properties;
 public class Client {
 
     public void contactOperator() {
-        Manager manager = Database.getInstance().getManager();
+        Manager manager = DatabaseEmulator.getInstance().getManager();
         Operator operator = manager.provideOperator();
         if(operator == null) return;
         if (operator instanceof WebOperator) {
@@ -35,7 +33,7 @@ public class Client {
             System.out.println(properties.getProperty("restaurant"));
 
             Order order = new Order();
-            Database db = Database.getInstance();
+            DatabaseEmulator db = DatabaseEmulator.getInstance();
             Restaurant restaurant = db.findRestaurant(properties.getProperty("restaurant"));
             order.setId(Integer.parseInt(properties.getProperty("id")));
             order.setRestaurant(restaurant);
