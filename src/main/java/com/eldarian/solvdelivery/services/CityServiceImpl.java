@@ -24,7 +24,7 @@ public class CityServiceImpl implements CityService{
 
     @Override
     public Restaurant findRestaurant(int id) {
-        return restaurantsDao.getRestaurantById(id);;
+        return restaurantsDao.getRestaurantById(id);
     }
 
     @Override
