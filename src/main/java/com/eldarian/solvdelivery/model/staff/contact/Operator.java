@@ -1,13 +1,13 @@
-package com.eldarian.solvdelivery.staff.contact;
+package com.eldarian.solvdelivery.model.staff.contact;
 
-import com.eldarian.solvdelivery.ordering.Dish;
-import com.eldarian.solvdelivery.ordering.Order;
-import com.eldarian.solvdelivery.city.Building;
-import com.eldarian.solvdelivery.city.Restaurant;
-import com.eldarian.solvdelivery.city.Street;
+import com.eldarian.solvdelivery.model.order.Dish;
+import com.eldarian.solvdelivery.model.order.Order;
+import com.eldarian.solvdelivery.model.city.Building;
+import com.eldarian.solvdelivery.model.city.Restaurant;
+import com.eldarian.solvdelivery.model.city.Street;
 import com.eldarian.solvdelivery.services.CityService;
-import com.eldarian.solvdelivery.staff.Employee;
-import com.eldarian.solvdelivery.staff.Manager;
+import com.eldarian.solvdelivery.model.staff.Employee;
+import com.eldarian.solvdelivery.model.staff.Manager;
 
 import java.io.BufferedReader;
 import java.io.IOException;

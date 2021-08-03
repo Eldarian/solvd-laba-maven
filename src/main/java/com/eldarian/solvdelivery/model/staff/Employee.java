@@ -1,6 +1,6 @@
-package com.eldarian.solvdelivery.staff;
+package com.eldarian.solvdelivery.model.staff;
 
-import com.eldarian.solvdelivery.ordering.Order;
+import com.eldarian.solvdelivery.model.order.Order;
 
 public abstract class Employee {
 	private int id;

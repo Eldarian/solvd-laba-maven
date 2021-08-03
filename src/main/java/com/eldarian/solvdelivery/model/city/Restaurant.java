@@ -1,6 +1,6 @@
-package com.eldarian.solvdelivery.city;
+package com.eldarian.solvdelivery.model.city;
 
-import com.eldarian.solvdelivery.ordering.Dish;
+import com.eldarian.solvdelivery.model.order.Dish;
 import com.eldarian.solvdelivery.services.RestaurantService;
 
 import java.util.List;

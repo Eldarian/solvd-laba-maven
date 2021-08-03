@@ -1,4 +1,4 @@
-package com.eldarian.solvdelivery.city;
+package com.eldarian.solvdelivery.model.city;
 
 import java.util.ArrayList;
 import java.util.List;

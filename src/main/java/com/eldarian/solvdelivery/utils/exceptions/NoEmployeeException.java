@@ -1,4 +1,4 @@
-package com.eldarian.solvdelivery.exceptions;
+package com.eldarian.solvdelivery.utils.exceptions;
 
 public class NoEmployeeException extends Exception {
     public NoEmployeeException(){

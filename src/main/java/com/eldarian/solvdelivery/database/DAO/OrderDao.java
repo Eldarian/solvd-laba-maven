@@ -1,6 +1,6 @@
 package com.eldarian.solvdelivery.database.DAO;
 
-import com.eldarian.solvdelivery.ordering.Order;
+import com.eldarian.solvdelivery.model.order.Order;
 
 public interface OrderDao {
     void printAllOrders();

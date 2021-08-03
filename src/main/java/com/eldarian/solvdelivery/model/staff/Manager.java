@@ -1,13 +1,12 @@
-package com.eldarian.solvdelivery.staff;
+package com.eldarian.solvdelivery.model.staff;
 
-import com.eldarian.solvdelivery.Executor;
-import com.eldarian.solvdelivery.exceptions.NoEmployeeException;
-import com.eldarian.solvdelivery.ordering.Order;
+import com.eldarian.solvdelivery.utils.exceptions.NoEmployeeException;
+import com.eldarian.solvdelivery.model.order.Order;
 import com.eldarian.solvdelivery.services.CityService;
-import com.eldarian.solvdelivery.staff.delivery.Courier;
-import com.eldarian.solvdelivery.staff.contact.Operator;
-import com.eldarian.solvdelivery.staff.contact.PhoneOperator;
-import com.eldarian.solvdelivery.staff.contact.WebOperator;
+import com.eldarian.solvdelivery.model.staff.delivery.Courier;
+import com.eldarian.solvdelivery.model.staff.contact.Operator;
+import com.eldarian.solvdelivery.model.staff.contact.PhoneOperator;
+import com.eldarian.solvdelivery.model.staff.contact.WebOperator;
 import org.apache.log4j.Logger;
 
 import java.util.LinkedList;

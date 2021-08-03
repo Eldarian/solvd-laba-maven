@@ -1,6 +1,6 @@
-package com.eldarian.solvdelivery.staff.contact;
+package com.eldarian.solvdelivery.model.staff.contact;
 
-import com.eldarian.solvdelivery.staff.Manager;
+import com.eldarian.solvdelivery.model.staff.Manager;
 
 public class PhoneOperator extends Operator {
 

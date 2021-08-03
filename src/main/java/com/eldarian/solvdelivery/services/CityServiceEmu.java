@@ -1,47 +1,29 @@
-package com.eldarian.solvdelivery.database;
+package com.eldarian.solvdelivery.services;
 
-import com.eldarian.solvdelivery.city.Building;
-import com.eldarian.solvdelivery.city.Restaurant;
-import com.eldarian.solvdelivery.city.Street;
-import com.eldarian.solvdelivery.ordering.Dish;
-import com.eldarian.solvdelivery.services.CityService;
-import com.eldarian.solvdelivery.staff.Manager;
-import com.eldarian.solvdelivery.staff.contact.PhoneOperator;
-import com.eldarian.solvdelivery.staff.contact.WebOperator;
-import com.eldarian.solvdelivery.staff.delivery.AutoCourier;
-import com.eldarian.solvdelivery.staff.delivery.FootCourier;
+import com.eldarian.solvdelivery.model.city.Building;
+import com.eldarian.solvdelivery.model.city.Restaurant;
+import com.eldarian.solvdelivery.model.city.Street;
+import com.eldarian.solvdelivery.model.order.Dish;
 
 import java.util.*;
 
 //temporary class, will be replaced with sql
-public class DatabaseEmulator implements CityService {
-    private List<Manager> managers;
+public class CityServiceEmu implements CityService {
+
     private List<Restaurant> restaurants;
     private Map<String, Street> streets;
 
-    private static DatabaseEmulator instance;
+    private static CityServiceEmu instance;
 
-    private DatabaseEmulator() {
+    private CityServiceEmu() {
         initCity();
-        initStaff();
     }
 
-    public static DatabaseEmulator getInstance() {
+    public static CityServiceEmu getInstance() {
         if (instance == null) {
-            instance = new DatabaseEmulator();
+            instance = new CityServiceEmu();
         }
         return instance;
-    }
-
-    //hardcoded method with data
-    private void initStaff() {
-        managers = new ArrayList<>();
-        Manager manager = new Manager(this);
-        manager.addCourier(new FootCourier("Benny"));
-        manager.addCourier(new AutoCourier("Jack"));
-        manager.addOperator(new PhoneOperator(manager));
-        manager.addOperator(new WebOperator(manager));
-        managers.add(manager);
     }
 
     //hardcoded method with data
@@ -138,9 +120,7 @@ public class DatabaseEmulator implements CityService {
         return street;
     }
 
-    public Manager getManager() {
-        return managers.get(0); //TODO replace to search of free manager or make single-manager system
-    }
+
 
     @Override
     public List<String> getRestaurantNames() {

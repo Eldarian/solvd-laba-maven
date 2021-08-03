@@ -1,6 +1,6 @@
 package com.eldarian.solvdelivery.utils;
 
-import com.eldarian.solvdelivery.ordering.Order;
+import com.eldarian.solvdelivery.model.order.Order;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;

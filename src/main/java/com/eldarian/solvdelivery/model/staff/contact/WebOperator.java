@@ -1,7 +1,6 @@
-package com.eldarian.solvdelivery.staff.contact;
+package com.eldarian.solvdelivery.model.staff.contact;
 
-import com.eldarian.solvdelivery.ordering.Order;
-import com.eldarian.solvdelivery.staff.Manager;
+import com.eldarian.solvdelivery.model.staff.Manager;
 
 public class WebOperator extends Operator{
 

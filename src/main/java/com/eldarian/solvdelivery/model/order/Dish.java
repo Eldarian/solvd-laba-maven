@@ -1,4 +1,4 @@
-package com.eldarian.solvdelivery.ordering;
+package com.eldarian.solvdelivery.model.order;
 
 public class Dish {
     private String name;

@@ -1,8 +1,8 @@
-package com.eldarian.solvdelivery.ordering;
+package com.eldarian.solvdelivery.model.order;
 
 import com.eldarian.solvdelivery.utils.JsonExecutor;
-import com.eldarian.solvdelivery.city.Building;
-import com.eldarian.solvdelivery.city.Restaurant;
+import com.eldarian.solvdelivery.model.city.Building;
+import com.eldarian.solvdelivery.model.city.Restaurant;
 import org.apache.log4j.Logger;
 
 public class Order {

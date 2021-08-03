@@ -1,11 +1,13 @@
-package com.eldarian.solvdelivery.ordering;
+package com.eldarian.solvdelivery.client;
 
-import com.eldarian.solvdelivery.city.Restaurant;
-import com.eldarian.solvdelivery.city.Street;
-import com.eldarian.solvdelivery.database.DatabaseEmulator;
-import com.eldarian.solvdelivery.staff.Manager;
-import com.eldarian.solvdelivery.staff.contact.Operator;
-import com.eldarian.solvdelivery.staff.contact.WebOperator;
+import com.eldarian.solvdelivery.model.city.Restaurant;
+import com.eldarian.solvdelivery.model.city.Street;
+import com.eldarian.solvdelivery.services.CityServiceEmu;
+import com.eldarian.solvdelivery.services.StaffServiceEmu;
+import com.eldarian.solvdelivery.model.order.Order;
+import com.eldarian.solvdelivery.model.staff.Manager;
+import com.eldarian.solvdelivery.model.staff.contact.Operator;
+import com.eldarian.solvdelivery.model.staff.contact.WebOperator;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -14,7 +16,7 @@ import java.util.Properties;
 public class Client {
 
     public void contactOperator() {
-        Manager manager = DatabaseEmulator.getInstance().getManager();
+        Manager manager = StaffServiceEmu.getInstance().getManager();
         Operator operator = manager.provideOperator();
         if(operator == null) return;
         if (operator instanceof WebOperator) {
@@ -33,7 +35,7 @@ public class Client {
             System.out.println(properties.getProperty("restaurant"));
 
             Order order = new Order();
-            DatabaseEmulator db = DatabaseEmulator.getInstance();
+            CityServiceEmu db = CityServiceEmu.getInstance();
             Restaurant restaurant = db.findRestaurant(properties.getProperty("restaurant"));
             order.setId(Integer.parseInt(properties.getProperty("id")));
             order.setRestaurant(restaurant);
