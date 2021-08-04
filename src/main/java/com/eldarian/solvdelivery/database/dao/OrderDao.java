@@ -7,4 +7,5 @@ public interface OrderDao {
     Order getOrderById(int id);
     void insertOrder(Order order);
     void updateOrder(Order order);
+    void deleteOrder(Order order);
 }
