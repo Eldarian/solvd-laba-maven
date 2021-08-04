@@ -1,7 +1,9 @@
 package com.eldarian.solvdelivery.services;
 
-import com.eldarian.solvdelivery.database.dao.BuildingsDao;
-import com.eldarian.solvdelivery.database.dao.RestaurantsDao;
+import com.eldarian.solvdelivery.database.dao.BuildingDao;
+import com.eldarian.solvdelivery.database.dao.BuildingDaoImpl;
+import com.eldarian.solvdelivery.database.dao.RestaurantDao;
+import com.eldarian.solvdelivery.database.dao.RestaurantDaoImpl;
 import com.eldarian.solvdelivery.model.city.Building;
 import com.eldarian.solvdelivery.model.city.Restaurant;
 
@@ -10,32 +12,33 @@ import java.util.List;
 
 public class CityServiceImpl implements CityService{
 
-    private RestaurantsDao restaurantsDao;
-    private BuildingsDao buildingsDao;
+    private RestaurantDao restaurantDao;
+    private BuildingDao buildingDao;
+
 
     @Override
     public Restaurant findRestaurant(String name) {
 
-        return restaurantsDao.getRestaurantByName(name);
+        return restaurantDao.getRestaurantByName(name);
     }
 
     @Override
     public Restaurant findRestaurant(int id) {
-        return restaurantsDao.getRestaurantById(id);
+        return restaurantDao.getRestaurantById(id);
     }
 
     @Override
     public Building findBuilding(String streetName, int buildingNumber) {
-        return buildingsDao.findBuildingByStreetAndNumber(streetName, buildingNumber);
+        return buildingDao.findBuildingByStreetAndNumber(streetName, buildingNumber);
     }
 
     @Override
     public List<String> getRestaurantNames() {
-        return restaurantsDao.getRestaurantNames();
+        return restaurantDao.getRestaurantNames();
     }
 
     @Override
     public ArrayList<String> getStreetNames() {
-        return buildingsDao.getStreetNames();
+        return buildingDao.getStreetNames();
     }
 }

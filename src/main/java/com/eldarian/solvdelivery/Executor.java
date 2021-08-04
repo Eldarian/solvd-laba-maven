@@ -13,7 +13,7 @@ public class Executor {
 		PropertyConfigurator.configure("src/main/resources/log4j.properties");
 		logger.info("logger configuration successful");
 		Client client = new Client();
-		client.contactOperator();
+		client.makeOrder();
 	}
 
 }

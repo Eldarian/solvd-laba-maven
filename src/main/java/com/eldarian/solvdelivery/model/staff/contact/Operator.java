@@ -7,6 +7,7 @@ import com.eldarian.solvdelivery.model.city.Restaurant;
 import com.eldarian.solvdelivery.services.CityService;
 import com.eldarian.solvdelivery.model.staff.Employee;
 import com.eldarian.solvdelivery.model.staff.Manager;
+import com.eldarian.solvdelivery.services.DishService;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.Scanner;
 public abstract class Operator extends Employee {
     private Manager manager;
     private CityService cityService;
+    private DishService dishService;
 
     public Operator(Manager manager) {
         super();
@@ -109,7 +111,7 @@ public abstract class Operator extends Employee {
             reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Choose your dish:");
             restaurant.printMenu();
-            dish = restaurant.findDish(reader.readLine());
+            dish = dishService.findDish(reader.readLine());
             order.setDish(dish);
         } catch (IOException e) {
             System.out.println("Exception in input system");
