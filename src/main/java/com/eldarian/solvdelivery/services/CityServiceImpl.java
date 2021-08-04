@@ -14,7 +14,10 @@ public class CityServiceImpl implements CityService{
 
     private RestaurantDao restaurantDao;
     private BuildingDao buildingDao;
-
+    public CityServiceImpl() {
+        restaurantDao = new RestaurantDaoImpl();
+        buildingDao = new BuildingDaoImpl();
+    }
 
     @Override
     public Restaurant findRestaurant(String name) {

@@ -5,12 +5,14 @@ import com.eldarian.solvdelivery.model.order.Order;
 import com.eldarian.solvdelivery.model.staff.Manager;
 import com.eldarian.solvdelivery.model.staff.contact.Operator;
 import com.eldarian.solvdelivery.model.staff.contact.WebOperator;
+import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
 public class Client {
+    private static Logger logger = Logger.getLogger(Client.class);
 
     public void contactOperator() {
         Manager manager = new Manager();
@@ -33,7 +35,6 @@ public class Client {
 
             Order order = new Order();
 
-
             order.saveAsJSON();
             operator.handleOrder(order);
         } catch (IOException e) {
@@ -44,5 +45,11 @@ public class Client {
     public void sendOrderFromJSON(Operator operator) {
         Order order = Order.readFromJSON("order555");
         operator.handleOrder(order);
+    }
+
+    public void makeOrder() {
+        Controller controller = new Controller();
+        Order order = controller.generateOrder();
+        logger.info(order);
     }
 }

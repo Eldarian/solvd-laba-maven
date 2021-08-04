@@ -4,7 +4,7 @@ import com.eldarian.solvdelivery.model.city.Restaurant;
 
 import java.util.List;
 
-public interface RestaurantsDao {
+public interface RestaurantDao {
     Restaurant getRestaurantByName(String name);
     Restaurant getRestaurantById(int id);
 

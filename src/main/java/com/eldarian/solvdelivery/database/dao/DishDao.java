@@ -4,7 +4,7 @@ import com.eldarian.solvdelivery.model.order.Dish;
 
 import java.util.List;
 
-public interface DishesDao {
+public interface DishDao {
     Dish getDishByName(String name);
 
     List<String> getDishNamesByRestaurant(int restaurantId);
