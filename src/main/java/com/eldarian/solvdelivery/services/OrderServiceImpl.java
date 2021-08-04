@@ -6,7 +6,7 @@ import com.eldarian.solvdelivery.database.dto.OrderDto;
 import com.eldarian.solvdelivery.model.order.Order;
 
 public class OrderServiceImpl implements OrderService{
-    OrderDao orderDao = new OrderDaoImpl();
+    private OrderDao orderDao = new OrderDaoImpl();
 
     @Override
     public OrderDto getOrder(int id) {

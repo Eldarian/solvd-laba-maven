@@ -1,7 +1,7 @@
 package com.eldarian.solvdelivery.model.order;
 
-import com.eldarian.solvdelivery.services.RestaurantService;
-import com.eldarian.solvdelivery.services.RestaurantServiceImpl;
+import com.eldarian.solvdelivery.services.DishService;
+import com.eldarian.solvdelivery.services.DishServiceImpl;
 import com.eldarian.solvdelivery.utils.JsonExecutor;
 import com.eldarian.solvdelivery.model.city.Building;
 import com.eldarian.solvdelivery.model.city.Restaurant;
@@ -10,7 +10,7 @@ import org.apache.log4j.Logger;
 public class Order {
 	private static Logger logger = Logger.getLogger(Order.class);
 
-	RestaurantService restaurantService = new RestaurantServiceImpl();
+	DishService dishService = new DishServiceImpl();
 	int id;
 
 	private Restaurant restaurant;

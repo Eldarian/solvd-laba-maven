@@ -1,21 +1,21 @@
 package com.eldarian.solvdelivery.model.city;
 
-import com.eldarian.solvdelivery.model.order.Dish;
-import com.eldarian.solvdelivery.services.RestaurantService;
+import org.apache.log4j.Logger;
 
 import java.util.List;
 
-public class Restaurant extends Building implements RestaurantService {
+public class Restaurant extends Building {
+    private static Logger logger = Logger.getLogger(Restaurant.class);
     private String name;
-    private List<Dish> menu;
+    private List<String> menu;
 
-    public Restaurant(String street, int buildingNumber, String name, List<Dish> menu) {
+    public Restaurant(String street, int buildingNumber, String name, List<String> menu) {
         super(street, buildingNumber);
         this.name = name;
         this.menu = menu;
     }
 
-    public Restaurant(){
+    public Restaurant() {
         super();
     }
 
@@ -23,23 +23,22 @@ public class Restaurant extends Building implements RestaurantService {
         this.name = name;
     }
 
-    public void setMenu(List<Dish> menu) {
+    public void setMenu(List<String> menu) {
         this.menu = menu;
     }
 
-    public List<Dish> getMenu() {
+    public List<String> getMenu() {
         return menu;
     }
 
     public void printMenu() {
-        if(menu != null && !menu.isEmpty()) {
-            for (Dish dish : menu) {
-                System.out.println(dish.getName());
+        if (menu != null && !menu.isEmpty()) {
+            for (String dish : menu) {
+                logger.info(dish);
             }
         } else {
-            System.out.println("This restaurant has no menu.");
+            logger.info("This restaurant has no menu.");
         }
-
     }
 
     public String getName() {
@@ -51,19 +50,5 @@ public class Restaurant extends Building implements RestaurantService {
         return name +
                 ", " + getBuildingNumber();
     }
-
-    @Override
-    public Dish findDish(String name) {
-        if(menu != null && !menu.isEmpty()) {
-            for (Dish dish : menu) {
-                if (dish.getName().equals(name)) {
-                    return dish;
-                }
-            }
-        } else {
-            System.out.println("Warning: No menu in restaurant");
-        }
-        System.out.println("There is no dish with name " + name);
-        return null; //TODO Replace with special Null-Dish object
-    }
 }
+
