@@ -15,11 +15,11 @@ public class StaffServiceEmu {
     private static StaffServiceEmu instance;
 
     private StaffServiceEmu() {
-        initStaff();
+        /*initStaff();*/
     }
 
     //hardcoded method with data
-    private void initStaff() {
+    /*private void initStaff() {
         managers = new ArrayList<>();
         Manager manager = new Manager(CityServiceEmu.getInstance());
         manager.addCourier(new FootCourier("Benny"));
@@ -27,7 +27,7 @@ public class StaffServiceEmu {
         manager.addOperator(new PhoneOperator(manager));
         manager.addOperator(new WebOperator(manager));
         managers.add(manager);
-    }
+    }*/
 
     public Manager getManager() {
         return managers.get(0); //TODO replace to search of free manager or make single-manager system

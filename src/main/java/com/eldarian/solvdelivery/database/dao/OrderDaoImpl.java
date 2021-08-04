@@ -1,6 +1,7 @@
-package com.eldarian.solvdelivery.database.DAO;
+package com.eldarian.solvdelivery.database.dao;
 
 import com.eldarian.solvdelivery.database.SQLConnector;
+import com.eldarian.solvdelivery.database.dto.OrderDto;
 import com.eldarian.solvdelivery.model.order.Order;
 
 import java.sql.Connection;
@@ -26,11 +27,11 @@ public class OrderDaoImpl implements OrderDao {
     }
 
     @Override
-    public Order getOrderById(int id) {
-        Order order = null;
+    public OrderDto getOrderById(int id) {
+        OrderDto order = null;
         try (Connection conn = SQLConnector.connect()) {
-            PreparedStatement getAll = conn.prepareStatement("SELECT * FROM orders WHERE id=" + id);
-            ResultSet resultSet = getAll.executeQuery();
+            PreparedStatement getById = conn.prepareStatement("SELECT * FROM orders WHERE id=" + id);
+            ResultSet resultSet = getById.executeQuery();
             if (resultSet.next()) {
                 order = extractOrderFromResultSet(resultSet);
             }
@@ -40,26 +41,43 @@ public class OrderDaoImpl implements OrderDao {
         return order;
     }
 
-    private Order extractOrderFromResultSet(ResultSet resultSet) throws SQLException {
-        Order order = new Order();
+    private OrderDto extractOrderFromResultSet(ResultSet resultSet) throws SQLException {
+        OrderDto order = new OrderDto();
         order.setId(resultSet.getInt("id"));
         order.setBuildingId(resultSet.getInt("building"));
         order.setDishId(resultSet.getInt("dish"));
+        order.setRestaurantId(resultSet.getInt("restaurant"));
         return order;
     }
 
     @Override
-    public void insertOrder(Order order) {
+    public boolean insertOrder(OrderDto order) {
+        try (Connection conn = SQLConnector.connect()) {
+            String insertString = String.format(
+                    "INSERT INTO orders ('id', 'building', 'dish', 'restaurant') VALUES (%d, %d. %d, %d)",
+                    order.getId(),
+                    order.getBuildingId(),
+                    order.getDishId(),
+                    order.getRestaurantId());
+            PreparedStatement insert = conn.prepareStatement(insertString);
+            int i = insert.executeUpdate();
+            if(i == 1) {
+                return true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return false;
+    }
+
+    @Override
+    public void updateOrder(OrderDto order) {
 
     }
 
     @Override
-    public void updateOrder(Order order) {
-
-    }
-
-    @Override
-    public void deleteOrder(Order order) {
+    public void deleteOrder(OrderDto order) {
 
     }
 }

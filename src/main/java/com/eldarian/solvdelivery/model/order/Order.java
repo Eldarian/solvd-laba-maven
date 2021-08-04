@@ -1,5 +1,7 @@
 package com.eldarian.solvdelivery.model.order;
 
+import com.eldarian.solvdelivery.services.RestaurantService;
+import com.eldarian.solvdelivery.services.RestaurantServiceImpl;
 import com.eldarian.solvdelivery.utils.JsonExecutor;
 import com.eldarian.solvdelivery.model.city.Building;
 import com.eldarian.solvdelivery.model.city.Restaurant;
@@ -8,18 +10,19 @@ import org.apache.log4j.Logger;
 public class Order {
 	private static Logger logger = Logger.getLogger(Order.class);
 
+	RestaurantService restaurantService = new RestaurantServiceImpl();
 	int id;
 
 	private Restaurant restaurant;
 	private Dish dish;
-	private Building destination;
+	private Building building;
 
 	@Override
 	public String toString() {
 		return "\nid=" + id +
 				", \nrestaurant=" + restaurant +
 				", \ndish=" + dish +
-				", \ndeliver to " + destination;
+				", \ndeliver to " + building;
 	}
 
 	public void setId(int id) {
@@ -34,12 +37,12 @@ public class Order {
 		this.dish = dish;
 	}
 
-	public void setDestination(Building destination) {
-		this.destination = destination;
+	public void setBuilding(Building building) {
+		this.building = building;
 	}
 
 	public boolean checkIsValid() {
-		return restaurant != null && dish != null && destination != null;
+		return restaurant != null && dish != null && building != null;
 	}
 
 
@@ -55,8 +58,8 @@ public class Order {
 		return dish;
 	}
 
-	public Building getDestination() {
-		return destination;
+	public Building getBuilding() {
+		return building;
 	}
 
 	public void saveAsJSON() {

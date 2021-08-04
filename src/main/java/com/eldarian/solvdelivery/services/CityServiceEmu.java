@@ -8,7 +8,7 @@ import com.eldarian.solvdelivery.model.order.Dish;
 import java.util.*;
 
 //temporary class, will be replaced with sql
-public class CityServiceEmu implements CityService {
+public class CityServiceEmu  {
 
     private List<Restaurant> restaurants;
     private Map<String, Street> streets;
@@ -63,7 +63,7 @@ public class CityServiceEmu implements CityService {
 
     }
 
-    @Override
+
     public Restaurant findRestaurant(String name) {
         for(Restaurant restaurant: restaurants) {
             if(restaurant.getName().equals(name)) return restaurant;
@@ -71,7 +71,7 @@ public class CityServiceEmu implements CityService {
         return null;
     }
 
-    @Override
+
     public Restaurant findRestaurant(int id) {
         if(restaurants == null) {
             System.out.println("Error: Missing restaurants list");
@@ -88,7 +88,7 @@ public class CityServiceEmu implements CityService {
         }
         return restaurant;
     }
-    @Override
+
     public Building findBuilding(Street street, int buildingNumber) {
         Building building = null;
         if(street == null) {
@@ -99,7 +99,7 @@ public class CityServiceEmu implements CityService {
         return building;
     }
 
-    @Override
+
     public Street findStreet(String name) {
         if(streets == null) {
             System.out.println("Error: Missing streets map");
@@ -122,7 +122,6 @@ public class CityServiceEmu implements CityService {
 
 
 
-    @Override
     public List<String> getRestaurantNames() {
         List<String> list = new ArrayList<>();
         for (Restaurant restaurant: restaurants) {
@@ -134,7 +133,6 @@ public class CityServiceEmu implements CityService {
         return list;
     }
 
-    @Override
     public ArrayList<String> getStreetNames() {
         if(streets == null) {
             System.out.println("Error: Missing streets map");

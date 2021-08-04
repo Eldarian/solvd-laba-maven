@@ -1,4 +1,4 @@
-package com.eldarian.solvdelivery.database.DAO;
+package com.eldarian.solvdelivery.database.dao;
 
 import com.eldarian.solvdelivery.model.order.Dish;
 

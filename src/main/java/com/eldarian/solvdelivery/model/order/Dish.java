@@ -1,6 +1,7 @@
 package com.eldarian.solvdelivery.model.order;
 
 public class Dish {
+    private int id;
     private String name;
     private int price;
 
@@ -32,5 +33,13 @@ public class Dish {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }

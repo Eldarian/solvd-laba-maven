@@ -1,8 +1,8 @@
-package com.eldarian.solvdelivery.database.DAO;
+package com.eldarian.solvdelivery.database.dao;
 
 import com.eldarian.solvdelivery.model.city.Building;
-import com.eldarian.solvdelivery.model.city.Street;
+
 
 public interface BuildingsDao {
-    Building findBuildingByStreetAndNumber(Street street, int buildingNumber);
+    Building findBuildingByStreetAndNumber(String streetName, int buildingNumber);
 }

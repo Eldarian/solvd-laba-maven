@@ -1,8 +1,8 @@
 package com.eldarian.solvdelivery.services;
 
-import com.eldarian.solvdelivery.database.DAO.BuildingsDao;
-import com.eldarian.solvdelivery.database.DAO.RestaurantsDao;
-import com.eldarian.solvdelivery.database.DAO.StreetsDao;
+import com.eldarian.solvdelivery.database.dao.BuildingsDao;
+import com.eldarian.solvdelivery.database.dao.RestaurantsDao;
+import com.eldarian.solvdelivery.database.dao.StreetsDao;
 import com.eldarian.solvdelivery.model.city.Building;
 import com.eldarian.solvdelivery.model.city.Restaurant;
 import com.eldarian.solvdelivery.model.city.Street;
@@ -28,8 +28,8 @@ public class CityServiceImpl implements CityService{
     }
 
     @Override
-    public Building findBuilding(Street street, int buildingNumber) {
-        return buildingsDao.findBuildingByStreetAndNumber(street, buildingNumber);
+    public Building findBuilding(String streetName, int buildingNumber) {
+        return buildingsDao.findBuildingByStreetAndNumber(streetName, buildingNumber);
     }
 
     @Override

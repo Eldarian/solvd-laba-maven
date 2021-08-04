@@ -1,6 +1,6 @@
 package com.eldarian.solvdelivery.services;
 
-import com.eldarian.solvdelivery.database.DAO.DishesDao;
+import com.eldarian.solvdelivery.database.dao.DishesDao;
 import com.eldarian.solvdelivery.model.order.Dish;
 
 public class RestaurantServiceImpl implements RestaurantService{

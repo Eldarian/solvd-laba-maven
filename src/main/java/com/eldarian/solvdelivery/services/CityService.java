@@ -10,7 +10,7 @@ import java.util.List;
 public interface CityService {
     Restaurant findRestaurant(String name);
     Restaurant findRestaurant(int id);
-    Building findBuilding(Street street, int buildingNumber);
+    Building findBuilding(String streetName, int buildingNumber);
     Street findStreet(String name);
 
     List<String> getRestaurantNames();

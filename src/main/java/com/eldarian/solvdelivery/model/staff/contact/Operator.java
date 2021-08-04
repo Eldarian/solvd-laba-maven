@@ -56,8 +56,8 @@ public abstract class Operator extends Employee {
         return cityService.findRestaurant(string);
     }
 
-    private Building findBuilding(Street street, int number) {
-        return cityService.findBuilding(street, number);
+    private Building findBuilding(String streetName, int number) {
+        return cityService.findBuilding(streetName, number);
     }
 
     private Street findStreet(String string) {
@@ -143,8 +143,8 @@ public abstract class Operator extends Employee {
         Street street = chooseStreet();
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your address (Building number) " + street.calculateBuildingCount() + " buildings total:");
-        Building destination = findBuilding(street, scanner.nextInt());
-        order.setDestination(destination);
+        Building destination = findBuilding(street.getName(), scanner.nextInt());
+        order.setBuilding(destination);
     }
 
     private Street chooseStreet() {
