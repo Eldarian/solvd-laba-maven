@@ -1,12 +1,17 @@
 package com.eldarian.solvdelivery.services;
 
 import com.eldarian.solvdelivery.database.dao.DishDao;
+import com.eldarian.solvdelivery.database.dao.DishDaoImpl;
 import com.eldarian.solvdelivery.model.order.Dish;
 
 import java.util.List;
 
 public class DishServiceImpl implements DishService {
     private DishDao dishDao;
+
+    public DishServiceImpl() {
+        dishDao = new DishDaoImpl();
+    }
 
     @Override
     public Dish findDish(String name) {
