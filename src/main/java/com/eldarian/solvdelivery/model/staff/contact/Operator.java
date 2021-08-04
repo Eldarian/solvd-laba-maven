@@ -4,7 +4,6 @@ import com.eldarian.solvdelivery.model.order.Dish;
 import com.eldarian.solvdelivery.model.order.Order;
 import com.eldarian.solvdelivery.model.city.Building;
 import com.eldarian.solvdelivery.model.city.Restaurant;
-import com.eldarian.solvdelivery.model.city.Street;
 import com.eldarian.solvdelivery.services.CityService;
 import com.eldarian.solvdelivery.model.staff.Employee;
 import com.eldarian.solvdelivery.model.staff.Manager;
@@ -60,18 +59,17 @@ public abstract class Operator extends Employee {
         return cityService.findBuilding(streetName, number);
     }
 
-    private Street findStreet(String string) {
+    private boolean checkStreetExists(String string) {
+        ArrayList<String> streetNames = cityService.getStreetNames();
         if(string.matches("\\d+")) {
-            ArrayList<String> streetNames = cityService.getStreetNames();
             int index = Integer.parseInt(string);
             if(index >= 0 && index < streetNames.size()) {
-                return cityService.findStreet(streetNames.get(index));
+                return true;
             } else {
-                return null;
+                return false;
             }
-
         }
-        return cityService.findStreet(string);
+        return streetNames.stream().anyMatch(street -> street.equals(string));
     }
 
     public Manager getManager() {
@@ -140,18 +138,26 @@ public abstract class Operator extends Employee {
     }
 
     private void chooseDestination(Order order) {
-        Street street = chooseStreet();
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Enter your address (Building number) " + street.calculateBuildingCount() + " buildings total:");
-        Building destination = findBuilding(street.getName(), scanner.nextInt());
+        String street = chooseStreet();
+        Building destination = getBuilding(street);
         order.setBuilding(destination);
     }
 
-    private Street chooseStreet() {
+    private Building getBuilding(String street) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter your address (Building number) ");//TODO add list of existing building numbers on a street
+        Building destination = findBuilding(street, scanner.nextInt());
+        return destination;
+    }
+
+    private String chooseStreet() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your address (Street name):");
         printStreetNames();
-        Street street = findStreet(scanner.nextLine());
+        String street;
+        do {
+            street = scanner.nextLine();
+        } while (checkStreetExists(street));
         return street;
     }
 
