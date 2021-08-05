@@ -6,6 +6,6 @@ public interface OrderDao {
     void printAllOrders();
     OrderDto getOrderById(int id);
     boolean insertOrder(OrderDto order);
-    void updateOrder(OrderDto order);
-    void deleteOrder(OrderDto order);
+    boolean updateOrder(OrderDto order);
+    boolean deleteOrder(int id);
 }

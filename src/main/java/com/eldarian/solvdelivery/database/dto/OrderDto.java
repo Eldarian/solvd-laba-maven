@@ -2,7 +2,8 @@ package com.eldarian.solvdelivery.database.dto;
 
 public class OrderDto {
     private int id;
-    private int buildingId;
+    private String street;
+    private int buildingNumber;
     private int dishId;
     private int restaurantId;
 
@@ -29,11 +30,19 @@ public class OrderDto {
         this.restaurantId = restaurantId;
     }
 
-    public int getBuildingId() {
-        return buildingId;
+    public int getBuildingNumber() {
+        return buildingNumber;
     }
 
-    public void setBuildingId(int buildingId) {
-        this.buildingId = buildingId;
+    public void setBuildingNumber(int buildingNumber) {
+        this.buildingNumber = buildingNumber;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
     }
 }
