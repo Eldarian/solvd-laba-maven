@@ -8,6 +8,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 
 public class BuildingDaoImpl implements BuildingDao {
     @Override
@@ -15,11 +16,11 @@ public class BuildingDaoImpl implements BuildingDao {
         Building building = null;
 
         try (Connection conn = SQLConnector.connect()) {
-            PreparedStatement getByStreetAndNumber = conn.prepareStatement("SELECT * FROM buildings WHERE street=? AND building=?");
-            getByStreetAndNumber.setString(1, streetName);
-            getByStreetAndNumber.setInt(2, buildingNumber);
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM buildings WHERE street=? AND number=?");
+            statement.setString(1, streetName);
+            statement.setInt(2, buildingNumber);
 
-            ResultSet resultSet = getByStreetAndNumber.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 building = extractBuildingFromResultSet(resultSet);
             }
@@ -31,9 +32,8 @@ public class BuildingDaoImpl implements BuildingDao {
 
     private Building extractBuildingFromResultSet(ResultSet resultSet) throws SQLException {
         Building building = new Building();
-        building.setId(resultSet.getInt("id"));
         building.setStreetName(resultSet.getString("street"));
-        building.setBuildingNumber(resultSet.getInt("building"));
+        building.setBuildingNumber(resultSet.getInt("number"));
         return building;
     }
 
@@ -42,9 +42,9 @@ public class BuildingDaoImpl implements BuildingDao {
         ArrayList<String> streets = new ArrayList<>();
 
         try (Connection conn = SQLConnector.connect()) {
-            PreparedStatement getByName = conn.prepareStatement("SELECT DISTINCT street FROM building");
+            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT street FROM buildings");
 
-            ResultSet resultSet = getByName.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 streets.add(resultSet.getString("street"));
             }
@@ -52,5 +52,23 @@ public class BuildingDaoImpl implements BuildingDao {
             e.printStackTrace();
         }
         return streets;
+    }
+
+    @Override
+    public List<Integer> getBuildingNumbersByStreetName(String street) {
+        List<Integer> numbers = new ArrayList<>();
+
+        try (Connection conn = SQLConnector.connect()) {
+            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT number FROM buildings WHERE street=?");
+            statement.setString(1, street);
+
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                numbers.add(resultSet.getInt("number"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return numbers;
     }
 }

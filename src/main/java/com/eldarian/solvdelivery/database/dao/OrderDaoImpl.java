@@ -14,8 +14,8 @@ public class OrderDaoImpl implements OrderDao {
     public void printAllOrders() {
         String getAllString = "SELECT * FROM orders";
         try (Connection conn = SQLConnector.connect()){
-            PreparedStatement getAll = conn.prepareStatement(getAllString);
-            ResultSet resultSet = getAll.executeQuery();
+            PreparedStatement statement = conn.prepareStatement(getAllString);
+            ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 System.out.println(resultSet.getInt("id"));
                 System.out.println(resultSet.getInt("dish"));
@@ -30,8 +30,8 @@ public class OrderDaoImpl implements OrderDao {
     public OrderDto getOrderById(int id) {
         OrderDto order = null;
         try (Connection conn = SQLConnector.connect()) {
-            PreparedStatement getById = conn.prepareStatement("SELECT * FROM orders WHERE id=" + id);
-            ResultSet resultSet = getById.executeQuery();
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM orders WHERE id=" + id);
+            ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 order = extractOrderFromResultSet(resultSet);
             }
@@ -59,8 +59,8 @@ public class OrderDaoImpl implements OrderDao {
                     order.getBuildingId(),
                     order.getDishId(),
                     order.getRestaurantId());
-            PreparedStatement insert = conn.prepareStatement(insertString);
-            int i = insert.executeUpdate();
+            PreparedStatement statement = conn.prepareStatement(insertString);
+            int i = statement.executeUpdate();
             if(i == 1) {
                 return true;
             }

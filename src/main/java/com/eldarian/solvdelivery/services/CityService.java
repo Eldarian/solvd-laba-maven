@@ -14,5 +14,5 @@ public interface CityService {
     ArrayList<String> getStreetNames();
 
 
-
+    List<Integer> getBuildingNumbersOnStreet(String street);
 }

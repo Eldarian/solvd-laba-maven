@@ -44,4 +44,9 @@ public class CityServiceImpl implements CityService{
     public ArrayList<String> getStreetNames() {
         return buildingDao.getStreetNames();
     }
+
+    @Override
+    public List<Integer> getBuildingNumbersOnStreet(String street) {
+        return buildingDao.getBuildingNumbersByStreetName(street);
+    }
 }

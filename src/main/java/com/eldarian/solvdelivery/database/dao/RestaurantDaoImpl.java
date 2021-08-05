@@ -20,10 +20,10 @@ public class RestaurantDaoImpl implements RestaurantDao {
         Restaurant restaurant = null;
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement getByName = conn.prepareStatement("SELECT * FROM restaurants WHERE name=?");
-            getByName.setString(1, name);
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM restaurants WHERE name=?");
+            statement.setString(1, name);
 
-            ResultSet resultSet = getByName.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()) {
                 restaurant = extractRestaurantFromResultSet(resultSet);
             }
@@ -38,10 +38,10 @@ public class RestaurantDaoImpl implements RestaurantDao {
         Restaurant restaurant = null;
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement getByName = conn.prepareStatement("SELECT * FROM restaurants WHERE id=?");
-            getByName.setInt(1, id);
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM restaurants WHERE id=?");
+            statement.setInt(1, id);
 
-            ResultSet resultSet = getByName.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()) {
                 restaurant = extractRestaurantFromResultSet(resultSet);
             }
@@ -59,9 +59,9 @@ public class RestaurantDaoImpl implements RestaurantDao {
         List<String> restaurants = new ArrayList<>();
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement getByName = conn.prepareStatement("SELECT DISTINCT name FROM restaurants");
+            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT name FROM restaurants");
 
-            ResultSet resultSet = getByName.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
                restaurants.add(resultSet.getString("name"));
             }

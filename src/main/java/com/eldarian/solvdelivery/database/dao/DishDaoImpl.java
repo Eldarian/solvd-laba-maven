@@ -3,6 +3,7 @@ package com.eldarian.solvdelivery.database.dao;
 import com.eldarian.solvdelivery.database.SQLConnector;
 import com.eldarian.solvdelivery.model.city.Restaurant;
 import com.eldarian.solvdelivery.model.order.Dish;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -13,17 +14,20 @@ import java.util.List;
 
 public class DishDaoImpl implements DishDao{
 
+    private static Logger logger = Logger.getLogger(DishDaoImpl.class);
+
     @Override
     public Dish getDishByName(String name) {
         Dish dish = null;
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement getByName = conn.prepareStatement("SELECT * FROM restaurants WHERE name=?");
-            getByName.setString(1, name);
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM dishes WHERE name=?");
+            statement.setString(1, name);
 
-            ResultSet resultSet = getByName.executeQuery();
+            ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()) {
                 dish = extractDishFromResultSet(resultSet);
+                logger.info("id " + resultSet.getInt("id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -32,10 +36,12 @@ public class DishDaoImpl implements DishDao{
     }
 
     private Dish extractDishFromResultSet(ResultSet resultSet) throws SQLException {
+        logger.info("start extraction");
         Dish dish = new Dish();
         dish.setId(resultSet.getInt("id"));
         dish.setName(resultSet.getString("name"));
         dish.setPrice(resultSet.getInt("price"));
+        logger.info("dish extraction finished");
         return dish;
 
     }
@@ -45,9 +51,9 @@ public class DishDaoImpl implements DishDao{
         List<String> restaurants = new ArrayList<>();
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement getByName = conn.prepareStatement("SELECT DISTINCT name FROM dish WHERE 'restaurant'=?");
-            getByName.setInt(1, restaurantId);
-            ResultSet resultSet = getByName.executeQuery();
+            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT name FROM dishes WHERE restaurant=?");
+            statement.setInt(1, restaurantId);
+            ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
                 restaurants.add(resultSet.getString("name"));
             }

@@ -14,6 +14,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Controller {
@@ -37,6 +38,7 @@ public class Controller {
         } while (restaurant == null && attempt < 10);
         chooseDish(order, restaurant, 0);
         chooseDestination(order);
+
         return order;
     }
 
@@ -63,29 +65,18 @@ public class Controller {
     }
 
     private void chooseDish(Order order, Restaurant restaurant, int attempt) {
-        Dish dish = null;
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new InputStreamReader(System.in));
-            System.out.println("Choose your dish:");
-            restaurant.printMenu();
-            dish = dishService.findDish(reader.readLine());
-            order.setDish(dish);
-        } catch (IOException e) {
-            System.out.println("Exception in input system");
-            e.printStackTrace();
-        } finally {
-            try {
-                reader.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            if(dish == null && attempt < 3) {
-                System.out.println("Wrong input, try again");
-                chooseDish(order, restaurant, ++attempt);
-            }
-        }
+        Scanner scanner = new Scanner(System.in);
+        Dish dish;
+        logger.info("Choose dish");
+        logger.info("Menu:");
+        logger.info(dishService.getMenu(restaurant.getId()));
+        dish = dishService.findDish(scanner.nextLine());
+        order.setDish(dish);
 
+        if(dish == null && attempt < 3) {
+            System.out.println("Wrong input, try again");
+            chooseDish(order, restaurant, ++attempt);
+        }
     }
 
     private void chooseDestination(Order order) {
@@ -97,6 +88,7 @@ public class Controller {
     private Building getBuilding(String street) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your address (Building number) ");//TODO add list of existing building numbers on a street
+        logger.info("Numbers: " + cityService.getBuildingNumbersOnStreet(street));
         Building destination = cityService.findBuilding(street, scanner.nextInt());
         return destination;
     }
@@ -104,16 +96,23 @@ public class Controller {
     private String chooseStreet() {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your address (Street name):");
-        printStreetNames();
+        ArrayList<String> streetNames = cityService.getStreetNames();
+        printStreetNames(streetNames);
         String street;
         do {
             street = scanner.nextLine();
-        } while (checkStreetExists(street));
+            if(street.matches("\\d+")) {
+                int index = Integer.parseInt(street);
+                if(index >= 0 && index < streetNames.size()) {
+                    street = streetNames.get(index);
+                }
+            }
+        } while (!checkStreetExists(street));
         return street;
     }
 
-    private void printStreetNames() {
-        ArrayList<String> streetNames = cityService.getStreetNames();
+    private void printStreetNames(ArrayList<String> streetNames) {
+
         for (int i = 0; i < streetNames.size(); i++) {
             System.out.println(i + ": " + streetNames.get(i));
         }
