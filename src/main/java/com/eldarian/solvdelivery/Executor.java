@@ -1,18 +1,19 @@
 package com.eldarian.solvdelivery;
 
-import com.eldarian.solvdelivery.ordering.Client;
+import com.eldarian.solvdelivery.client.Client;
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
 
 
 public class Executor {
 
-	private static Logger logger = Logger.getLogger(Executor.class);
+	private static final Logger logger = Logger.getLogger(Executor.class);
+
 	public static void main(String[] args) {
-		//PropertyConfigurator.configure("log4j.properties");
+		PropertyConfigurator.configure("src/main/resources/log4j.properties");
 		logger.info("logger configuration successful");
 		Client client = new Client();
-		client.contactOperator();
+		client.execute();
 	}
 
 }
