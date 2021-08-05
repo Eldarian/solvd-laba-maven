@@ -6,5 +6,6 @@ import java.util.List;
 
 public interface DishService {
     Dish findDish(String name);
+    Dish findDish(int id);
     List<String> getMenu(int restaurantId);
 }

@@ -1,7 +1,6 @@
 package com.eldarian.solvdelivery.database.dao;
 
 import com.eldarian.solvdelivery.database.SQLConnector;
-import com.eldarian.solvdelivery.model.city.Restaurant;
 import com.eldarian.solvdelivery.model.order.Dish;
 import org.apache.log4j.Logger;
 
@@ -61,5 +60,21 @@ public class DishDaoImpl implements DishDao{
             e.printStackTrace();
         }
         return restaurants;
+    }
+
+    @Override
+    public Dish getDishById(int id) {
+        Dish dish = null;
+        try(Connection conn = SQLConnector.connect()) {
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM dishes WHERE id=?");
+            statement.setInt(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                dish = extractDishFromResultSet(resultSet);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return dish;
     }
 }

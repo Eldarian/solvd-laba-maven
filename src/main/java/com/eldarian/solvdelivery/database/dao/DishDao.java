@@ -8,4 +8,6 @@ public interface DishDao {
     Dish getDishByName(String name);
 
     List<String> getDishNamesByRestaurant(int restaurantId);
+
+    Dish getDishById(int id);
 }

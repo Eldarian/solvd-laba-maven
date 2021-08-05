@@ -19,6 +19,11 @@ public class DishServiceImpl implements DishService {
     }
 
     @Override
+    public Dish findDish(int id) {
+        return dishDao.getDishById(id);
+    }
+
+    @Override
     public List<String> getMenu(int restaurantId) {
         return dishDao.getDishNamesByRestaurant(restaurantId);
     }
