@@ -1,9 +1,6 @@
 package com.eldarian.solvdelivery.client;
 
 import com.eldarian.solvdelivery.model.order.Order;
-import com.eldarian.solvdelivery.model.staff.Manager;
-import com.eldarian.solvdelivery.model.staff.contact.Operator;
-import com.eldarian.solvdelivery.model.staff.contact.WebOperator;
 import org.apache.log4j.Logger;
 
 import java.io.FileInputStream;
@@ -16,43 +13,18 @@ public class Client {
 
     private Controller controller = new Controller();
 
-
-    public void contactOperator() {
-        Manager manager = new Manager();
-        Operator operator = manager.provideOperator();
-        if(operator == null) return;
-        if (operator instanceof WebOperator) {
-            //sendOrderFromProperties(operator);
-            sendOrderFromJSON(operator);
-            return;
-        }
-        Order order = operator.generateOrder();
-        operator.confirmOrder(order);
-    }
-
-    public void sendOrderFromProperties(Operator operator) {
-        Properties properties = new Properties();
-        try (FileInputStream fileInputStream = new FileInputStream("order.properties")){
-            properties.load(fileInputStream);
-            System.out.println(properties.getProperty("restaurant"));
-
-            Order order = new Order();
-
-            order.saveAsJSON();
-            operator.handleOrder(order);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void sendOrderFromJSON(Operator operator) {
-        Order order = Order.readFromJSON("order555");
-        operator.handleOrder(order);
+    public void execute() {
+        makeOrder();
+        sendOrderFromJSON();
+        checkOrder();
+        updateOrder();
+        deleteOrder();
     }
 
     public void makeOrder() {
         Order order = controller.generateOrder();
         logger.info(order);
+        order.saveAsJSON();
         controller.saveOrder(order);
     }
 
@@ -79,10 +51,23 @@ public class Client {
         logger.info(isSuccess?"deletion successful":"deletion failed");
     }
 
-    public void execute() {
-        makeOrder();
-        checkOrder();
-        updateOrder();
-        deleteOrder();
+    public void sendOrderFromJSON() {
+        Scanner scanner = new Scanner(System.in);
+        logger.info("Enter json name/address:");
+        Order order = Order.readFromJSON(scanner.nextLine());
+        controller.saveOrder(order);
+    }
+
+    public void sendOrderFromProperties() {
+        Properties properties = new Properties();
+        try (FileInputStream fileInputStream = new FileInputStream("order.properties")){
+            properties.load(fileInputStream);
+            System.out.println(properties.getProperty("restaurant"));
+
+            Order order = new Order();
+            controller.saveOrder(order);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
