@@ -45,4 +45,15 @@ public class OrderDto {
     public void setStreet(String street) {
         this.street = street;
     }
+
+    @Override
+    public String toString() {
+        return "OrderDto{" +
+                "id=" + id +
+                ", street='" + street + '\'' +
+                ", buildingNumber=" + buildingNumber +
+                ", dishId=" + dishId +
+                ", restaurantId=" + restaurantId +
+                '}';
+    }
 }

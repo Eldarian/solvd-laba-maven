@@ -2,10 +2,13 @@ package com.eldarian.solvdelivery.database.dao;
 
 import com.eldarian.solvdelivery.database.SQLConnector;
 import com.eldarian.solvdelivery.database.dto.OrderDto;
+import org.apache.log4j.Logger;
 
 import java.sql.*;
 
 public class OrderDaoImpl implements OrderDao {
+
+    private static final Logger logger = Logger.getLogger(OrderDaoImpl.class);
 
     public void printAllOrders() {
         String getAllString = "SELECT * FROM orders";
@@ -50,12 +53,13 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public boolean insertOrder(OrderDto order) {
         try (Connection conn = SQLConnector.connect()) {
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO orders ('id',  'dish', 'restaurant', 'building_number', 'street') VALUES (?, ?. ?, ?, ?)");
-            statement.setInt(1, order.getId());
+            logger.info(order);
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO orders (restaurant, dish, street, building_number) VALUES (?, ?, ?, ?)");
+            statement.setInt(1, order.getRestaurantId());
             statement.setInt(2, order.getDishId());
-            statement.setInt(3, order.getRestaurantId());
+            statement.setString(3, order.getStreet());
             statement.setInt(4, order.getBuildingNumber());
-            statement.setString(5, order.getStreet());
+
             int i = statement.executeUpdate();
             if(i == 1) {
                 return true;

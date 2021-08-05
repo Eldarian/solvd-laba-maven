@@ -4,27 +4,24 @@ import com.eldarian.solvdelivery.model.city.Building;
 import com.eldarian.solvdelivery.model.city.Restaurant;
 import com.eldarian.solvdelivery.model.order.Dish;
 import com.eldarian.solvdelivery.model.order.Order;
-import com.eldarian.solvdelivery.services.CityService;
-import com.eldarian.solvdelivery.services.CityServiceImpl;
-import com.eldarian.solvdelivery.services.DishService;
-import com.eldarian.solvdelivery.services.DishServiceImpl;
+import com.eldarian.solvdelivery.services.*;
 import org.apache.log4j.Logger;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 public class Controller {
-    CityService cityService;
+
+    private static final Logger logger = Logger.getLogger(Controller.class);
+
     DishService dishService;
-    private static Logger logger = Logger.getLogger(Controller.class);
+    CityService cityService;
+    OrderService orderService;
 
     public Controller() {
         this.cityService = new CityServiceImpl();
         this.dishService = new DishServiceImpl();
+        this.orderService = new OrderServiceImpl();
     }
 
     public Order generateOrder() {
@@ -38,8 +35,23 @@ public class Controller {
         } while (restaurant == null && attempt < 10);
         chooseDish(order, restaurant, 0);
         chooseDestination(order);
-
         return order;
+    }
+
+    public Order getOrder(int id) {
+        return orderService.getOrder(id);
+    }
+
+    public boolean saveOrder(Order order) {
+        return orderService.addOrder(order);
+    }
+
+    public boolean updateOrder(Order order) {
+        return orderService.updateOrder(order);
+    }
+
+    public boolean deleteOrder(int id) {
+        return orderService.deleteOrder(id);
     }
 
     private Restaurant chooseRestaurant(Order order) {
@@ -89,8 +101,7 @@ public class Controller {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your address (Building number) ");//TODO add list of existing building numbers on a street
         logger.info("Numbers: " + cityService.getBuildingNumbersOnStreet(street));
-        Building destination = cityService.findBuilding(street, scanner.nextInt());
-        return destination;
+        return cityService.findBuilding(street, scanner.nextInt());
     }
 
     private String chooseStreet() {
@@ -112,7 +123,6 @@ public class Controller {
     }
 
     private void printStreetNames(ArrayList<String> streetNames) {
-
         for (int i = 0; i < streetNames.size(); i++) {
             System.out.println(i + ": " + streetNames.get(i));
         }
@@ -122,11 +132,7 @@ public class Controller {
         ArrayList<String> streetNames = cityService.getStreetNames();
         if(string.matches("\\d+")) {
             int index = Integer.parseInt(string);
-            if(index >= 0 && index < streetNames.size()) {
-                return true;
-            } else {
-                return false;
-            }
+            return index >= 0 && index < streetNames.size();
         }
         return streetNames.stream().anyMatch(street -> street.equals(string));
     }

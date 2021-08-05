@@ -21,14 +21,17 @@ public class OrderServiceImpl implements OrderService{
         return order;
     }
 
+    @Override
     public boolean addOrder(Order order) {
         return orderDao.insertOrder(getOrderDto(order));
     }
 
+    @Override
     public boolean updateOrder(Order order) {
         return orderDao.updateOrder(getOrderDto(order));
     }
 
+    @Override
     public boolean deleteOrder(int id) {
         return orderDao.deleteOrder(id);
     }

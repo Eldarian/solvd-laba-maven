@@ -7,13 +7,13 @@ import org.apache.log4j.PropertyConfigurator;
 
 public class Executor {
 
-	private static Logger logger = Logger.getLogger(Executor.class);
+	private static final Logger logger = Logger.getLogger(Executor.class);
 
 	public static void main(String[] args) {
 		PropertyConfigurator.configure("src/main/resources/log4j.properties");
 		logger.info("logger configuration successful");
 		Client client = new Client();
-		client.makeOrder();
+		client.execute();
 	}
 
 }
