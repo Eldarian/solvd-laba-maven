@@ -15,9 +15,9 @@ public class BuildingDaoImpl implements BuildingDao {
         Building building = null;
 
         try (Connection conn = SQLConnector.connect()) {
-            PreparedStatement getByStreetAndNumber = conn.prepareStatement("SELECT * FROM buildings WHERE 'street'=? AND 'building'=?");
-            getByStreetAndNumber.setString(0, streetName);
-            getByStreetAndNumber.setInt(1, buildingNumber);
+            PreparedStatement getByStreetAndNumber = conn.prepareStatement("SELECT * FROM buildings WHERE street=? AND building=?");
+            getByStreetAndNumber.setString(1, streetName);
+            getByStreetAndNumber.setInt(2, buildingNumber);
 
             ResultSet resultSet = getByStreetAndNumber.executeQuery();
             if (resultSet.next()) {

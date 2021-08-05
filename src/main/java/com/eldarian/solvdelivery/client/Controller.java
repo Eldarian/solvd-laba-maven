@@ -8,6 +8,7 @@ import com.eldarian.solvdelivery.services.CityService;
 import com.eldarian.solvdelivery.services.CityServiceImpl;
 import com.eldarian.solvdelivery.services.DishService;
 import com.eldarian.solvdelivery.services.DishServiceImpl;
+import org.apache.log4j.Logger;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -18,6 +19,7 @@ import java.util.Scanner;
 public class Controller {
     CityService cityService;
     DishService dishService;
+    private static Logger logger = Logger.getLogger(Controller.class);
 
     public Controller() {
         this.cityService = new CityServiceImpl();
@@ -30,6 +32,7 @@ public class Controller {
         int attempt = 0;
         do {
             restaurant = chooseRestaurant(order);
+            logger.info(restaurant);
             attempt++;
         } while (restaurant == null && attempt < 10);
         chooseDish(order, restaurant, 0);

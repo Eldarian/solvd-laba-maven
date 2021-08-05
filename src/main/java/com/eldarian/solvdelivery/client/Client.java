@@ -1,6 +1,5 @@
 package com.eldarian.solvdelivery.client;
 
-import com.eldarian.solvdelivery.model.city.Restaurant;
 import com.eldarian.solvdelivery.model.order.Order;
 import com.eldarian.solvdelivery.model.staff.Manager;
 import com.eldarian.solvdelivery.model.staff.contact.Operator;

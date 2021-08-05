@@ -2,6 +2,7 @@ package com.eldarian.solvdelivery.database.dao;
 
 import com.eldarian.solvdelivery.database.SQLConnector;
 import com.eldarian.solvdelivery.model.city.Restaurant;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,13 +13,15 @@ import java.util.List;
 
 public class RestaurantDaoImpl implements RestaurantDao {
 
+    private static Logger logger = Logger.getLogger(RestaurantDaoImpl.class);
+
     @Override
     public Restaurant getRestaurantByName(String name) {
         Restaurant restaurant = null;
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement getByName = conn.prepareStatement("SELECT * FROM restaurants WHERE 'name'=?");
-            getByName.setString(0, name);
+            PreparedStatement getByName = conn.prepareStatement("SELECT * FROM restaurants WHERE name=?");
+            getByName.setString(1, name);
 
             ResultSet resultSet = getByName.executeQuery();
             if(resultSet.next()) {
@@ -35,12 +38,15 @@ public class RestaurantDaoImpl implements RestaurantDao {
         Restaurant restaurant = null;
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement getByName = conn.prepareStatement("SELECT * FROM restaurants WHERE 'id'=?");
-            getByName.setInt(0, id);
+            PreparedStatement getByName = conn.prepareStatement("SELECT * FROM restaurants WHERE id=?");
+            getByName.setInt(1, id);
 
             ResultSet resultSet = getByName.executeQuery();
             if(resultSet.next()) {
                 restaurant = extractRestaurantFromResultSet(resultSet);
+            }
+            if (restaurant == null) {
+                logger.warn("Restaurant has not found");
             }
         } catch (SQLException e) {
             e.printStackTrace();

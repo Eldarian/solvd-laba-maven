@@ -18,8 +18,8 @@ public class DishDaoImpl implements DishDao{
         Dish dish = null;
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement getByName = conn.prepareStatement("SELECT * FROM restaurants WHERE 'name'=?");
-            getByName.setString(0, name);
+            PreparedStatement getByName = conn.prepareStatement("SELECT * FROM restaurants WHERE name=?");
+            getByName.setString(1, name);
 
             ResultSet resultSet = getByName.executeQuery();
             if(resultSet.next()) {
@@ -46,7 +46,7 @@ public class DishDaoImpl implements DishDao{
 
         try(Connection conn = SQLConnector.connect()) {
             PreparedStatement getByName = conn.prepareStatement("SELECT DISTINCT name FROM dish WHERE 'restaurant'=?");
-            getByName.setInt(0, restaurantId);
+            getByName.setInt(1, restaurantId);
             ResultSet resultSet = getByName.executeQuery();
             while(resultSet.next()) {
                 restaurants.add(resultSet.getString("name"));
