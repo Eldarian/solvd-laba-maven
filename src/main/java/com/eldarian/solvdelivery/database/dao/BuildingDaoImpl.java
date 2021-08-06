@@ -16,7 +16,7 @@ public class BuildingDaoImpl implements BuildingDao {
         Building building = null;
 
         try (Connection conn = SQLConnector.connect()) {
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM buildings WHERE street=? AND number=?");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM buildings WHERE street=? AND building_number=?");
             statement.setString(1, streetName);
             statement.setInt(2, buildingNumber);
 
@@ -33,7 +33,7 @@ public class BuildingDaoImpl implements BuildingDao {
     private Building extractBuildingFromResultSet(ResultSet resultSet) throws SQLException {
         Building building = new Building();
         building.setStreetName(resultSet.getString("street"));
-        building.setBuildingNumber(resultSet.getInt("number"));
+        building.setBuildingNumber(resultSet.getInt("building_number"));
         return building;
     }
 
@@ -59,12 +59,12 @@ public class BuildingDaoImpl implements BuildingDao {
         List<Integer> numbers = new ArrayList<>();
 
         try (Connection conn = SQLConnector.connect()) {
-            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT number FROM buildings WHERE street=?");
+            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT building_number FROM buildings WHERE street=?");
             statement.setString(1, street);
 
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
-                numbers.add(resultSet.getInt("number"));
+                numbers.add(resultSet.getInt("building_number"));
             }
         } catch (SQLException e) {
             e.printStackTrace();

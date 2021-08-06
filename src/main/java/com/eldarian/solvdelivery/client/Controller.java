@@ -12,7 +12,7 @@ import java.util.Scanner;
 
 public class Controller {
 
-    private static final Logger logger = Logger.getLogger(Controller.class);
+    private static final Logger LOGGER = Logger.getLogger(Controller.class);
 
     DishService dishService;
     CityService cityService;
@@ -30,7 +30,7 @@ public class Controller {
         int attempt = 0;
         do {
             restaurant = chooseRestaurant(order);
-            logger.info(restaurant);
+            LOGGER.info(restaurant);
             attempt++;
         } while (restaurant == null && attempt < 10);
         chooseDish(order, restaurant, 0);
@@ -79,9 +79,9 @@ public class Controller {
     private void chooseDish(Order order, Restaurant restaurant, int attempt) {
         Scanner scanner = new Scanner(System.in);
         Dish dish;
-        logger.info("Choose dish");
-        logger.info("Menu:");
-        logger.info(dishService.getMenu(restaurant.getId()));
+        LOGGER.info("Choose dish");
+        LOGGER.info("Menu:");
+        LOGGER.info(dishService.getMenu(restaurant.getId()));
         dish = dishService.findDish(scanner.nextLine());
         order.setDish(dish);
 
@@ -100,7 +100,7 @@ public class Controller {
     private Building getBuilding(String street) {
         Scanner scanner = new Scanner(System.in);
         System.out.println("Enter your address (Building number) ");//TODO add list of existing building numbers on a street
-        logger.info("Numbers: " + cityService.getBuildingNumbersOnStreet(street));
+        LOGGER.info("Numbers: " + cityService.getBuildingNumbersOnStreet(street));
         return cityService.findBuilding(street, scanner.nextInt());
     }
 

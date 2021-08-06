@@ -6,7 +6,7 @@ import com.eldarian.solvdelivery.model.city.Restaurant;
 import org.apache.log4j.Logger;
 
 public class Order {
-    private static Logger logger = Logger.getLogger(Order.class);
+    private static final Logger LOGGER = Logger.getLogger(Order.class);
 
     private int id;
     private Restaurant restaurant;
@@ -59,13 +59,13 @@ public class Order {
     }
 
     public void saveAsJSON() {
-        logger.info("Saving to JSON...");
+        LOGGER.info("Saving to JSON...");
         JsonExecutor jsonExecutor = new JsonExecutor();
-        jsonExecutor.convertPojoToJsonFile(this, "order" + id);
+        jsonExecutor.convertPojoToJsonFile(this, "order" + id + ".json");
     }
 
     public static Order readFromJSON(String pathToFile) {
-        logger.info("Reading from JSON...");
+        LOGGER.info("Reading from JSON...");
         JsonExecutor jsonExecutor = new JsonExecutor();
         return jsonExecutor.readOrderPojoFromJsonFile(pathToFile);
     }

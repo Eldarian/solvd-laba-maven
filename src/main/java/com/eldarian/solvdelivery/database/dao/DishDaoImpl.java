@@ -13,20 +13,20 @@ import java.util.List;
 
 public class DishDaoImpl implements DishDao{
 
-    private static Logger logger = Logger.getLogger(DishDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(DishDaoImpl.class);
 
     @Override
     public Dish getDishByName(String name) {
         Dish dish = null;
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM dishes WHERE name=?");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM dishes WHERE dish_name=?");
             statement.setString(1, name);
 
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()) {
                 dish = extractDishFromResultSet(resultSet);
-                logger.info("id " + resultSet.getInt("id"));
+                LOGGER.info("id " + resultSet.getInt("dish_id"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,12 +35,12 @@ public class DishDaoImpl implements DishDao{
     }
 
     private Dish extractDishFromResultSet(ResultSet resultSet) throws SQLException {
-        logger.info("start extraction");
+        LOGGER.info("start extraction");
         Dish dish = new Dish();
-        dish.setId(resultSet.getInt("id"));
-        dish.setName(resultSet.getString("name"));
-        dish.setPrice(resultSet.getInt("price"));
-        logger.info("dish extraction finished");
+        dish.setId(resultSet.getInt("dish_id"));
+        dish.setName(resultSet.getString("dish_name"));
+        dish.setPrice(resultSet.getInt("dish_price"));
+        LOGGER.info("dish extraction finished");
         return dish;
 
     }
@@ -50,11 +50,11 @@ public class DishDaoImpl implements DishDao{
         List<String> restaurants = new ArrayList<>();
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT name FROM dishes WHERE restaurant=?");
+            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT dish_name FROM dishes WHERE restaurant_id=?");
             statement.setInt(1, restaurantId);
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
-                restaurants.add(resultSet.getString("name"));
+                restaurants.add(resultSet.getString("dish_name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -66,7 +66,7 @@ public class DishDaoImpl implements DishDao{
     public Dish getDishById(int id) {
         Dish dish = null;
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM dishes WHERE id=?");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM dishes WHERE dish_id=?");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
             if(resultSet.next()) {

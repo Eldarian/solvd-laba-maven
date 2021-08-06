@@ -13,14 +13,14 @@ import java.util.List;
 
 public class RestaurantDaoImpl implements RestaurantDao {
 
-    private static Logger logger = Logger.getLogger(RestaurantDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(RestaurantDaoImpl.class);
 
     @Override
     public Restaurant getRestaurantByName(String name) {
         Restaurant restaurant = null;
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM restaurants WHERE name=?");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM restaurants WHERE restaurant_name=?");
             statement.setString(1, name);
 
             ResultSet resultSet = statement.executeQuery();
@@ -38,7 +38,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
         Restaurant restaurant = null;
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM restaurants WHERE id=?");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM restaurants WHERE restaurant_id=?");
             statement.setInt(1, id);
 
             ResultSet resultSet = statement.executeQuery();
@@ -46,7 +46,7 @@ public class RestaurantDaoImpl implements RestaurantDao {
                 restaurant = extractRestaurantFromResultSet(resultSet);
             }
             if (restaurant == null) {
-                logger.warn("Restaurant has not found");
+                LOGGER.warn("Restaurant has not found");
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -59,11 +59,11 @@ public class RestaurantDaoImpl implements RestaurantDao {
         List<String> restaurants = new ArrayList<>();
 
         try(Connection conn = SQLConnector.connect()) {
-            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT name FROM restaurants");
+            PreparedStatement statement = conn.prepareStatement("SELECT DISTINCT restaurant_name FROM restaurants");
 
             ResultSet resultSet = statement.executeQuery();
             while(resultSet.next()) {
-               restaurants.add(resultSet.getString("name"));
+               restaurants.add(resultSet.getString("restaurant_name"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,10 +73,10 @@ public class RestaurantDaoImpl implements RestaurantDao {
 
     private Restaurant extractRestaurantFromResultSet(ResultSet resultSet) throws SQLException{
         Restaurant restaurant = new Restaurant();
-        restaurant.setId(resultSet.getInt("id"));
-        restaurant.setName(resultSet.getString("name"));
-        restaurant.setStreetName(resultSet.getString("street"));
-        restaurant.setBuildingNumber(resultSet.getInt("building"));
+        restaurant.setId(resultSet.getInt("restaurant_id"));
+        restaurant.setName(resultSet.getString("restaurant_name"));
+        restaurant.setStreetName(resultSet.getString("restaurant_street"));
+        restaurant.setBuildingNumber(resultSet.getInt("restaurant_building"));
         return restaurant;
     }
 }
