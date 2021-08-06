@@ -4,19 +4,25 @@ import com.eldarian.solvdelivery.model.order.Order;
 import com.fasterxml.jackson.core.JsonParseException;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.log4j.Logger;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Paths;
 
 public class JsonExecutor {
 
-    private Logger logger = Logger.getLogger(JsonExecutor.class);
+    private static final Logger LOGGER = Logger.getLogger(JsonExecutor.class);
 
     public void convertPojoToJsonFile(Order obj, String pathToFile) {
+        File file = new File(pathToFile);
         try {
             ObjectMapper mapper = new ObjectMapper();
-            mapper.writer().writeValue(Paths.get(pathToFile).toFile(), obj);
+            //mapper.writer().writeValue(file, obj);
+            mapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+            mapper.writeValue(file, obj);
+
         } catch (JsonMappingException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -35,7 +41,7 @@ public class JsonExecutor {
             e.printStackTrace();
         }
         if(obj == null) {
-            logger.error("No data in Json");
+            LOGGER.error("No data in Json");
         }
         return obj;
     }

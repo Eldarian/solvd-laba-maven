@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class Manager extends Employee {
 
-    private static Logger logger = Logger.getLogger(Manager.class);
+    private static final Logger LOGGER = Logger.getLogger(Manager.class);
     private List<Courier> couriers;
     private List<Operator> operators;
     CityService cityService;
@@ -53,9 +53,9 @@ public class Manager extends Employee {
             }
             throw new NoEmployeeException("No couriers available");
         } catch (NoEmployeeException e) {
-            logger.error(e.getMessage());
+            LOGGER.error(e.getMessage());
             e.printStackTrace();
-            logger.info("Order has been cancelled");
+            LOGGER.info("Order has been cancelled");
         }
 
     }
@@ -118,7 +118,7 @@ public class Manager extends Employee {
     }
 
     public Operator provideOperator() {
-        logger.info("Welcome to DelivereD! [p]hone or [w]eb?");
+        LOGGER.info("Welcome to DelivereD! [p]hone or [w]eb?");
         Scanner scanner = new Scanner(System.in);
         Operator operator = null;
         int attempt = 0;
@@ -131,38 +131,38 @@ public class Manager extends Employee {
                     try {
                         operator = getPhoneOperator();
                     } catch (NoEmployeeException e) {
-                        logger.error(e.getMessage());
-                        logger.info("Try another type of operator");
+                        LOGGER.error(e.getMessage());
+                        LOGGER.info("Try another type of operator");
                     }
                     if(operator == null) {
-                        logger.error("There is no available phone operator or there is error");
+                        LOGGER.error("There is no available phone operator or there is error");
                         break;
                     }
-                    logger.info("Called Phone Operator " + operator.getName());
+                    LOGGER.info("Called Phone Operator " + operator.getName());
                     break;
                 case "web":
                 case "w":
                     try {
                         operator = getWebOperator();
                     } catch (NoEmployeeException e) {
-                        logger.error(e.getMessage());
-                        logger.info("Try another type of operator");
+                        LOGGER.error(e.getMessage());
+                        LOGGER.info("Try another type of operator");
                     }
 
                     if(operator == null) {
-                        logger.error("There is no available phone operator or there is error");
+                        LOGGER.error("There is no available phone operator or there is error");
                         break;
                     }
-                    logger.info("Called Web Operator " + operator.getName());
+                    LOGGER.info("Called Web Operator " + operator.getName());
                     break;
                 default:
-                    logger.info("Incorrect type, try again. [p]hone or [w]eb?");
+                    LOGGER.info("Incorrect type, try again. [p]hone or [w]eb?");
                     break;
             }
             attempt++;
         } while (operator == null && attempt < 10);
         if(attempt >= 10) {
-            logger.error("Error: too many attempts");
+            LOGGER.error("Error: too many attempts");
         }
         return operator;
     }

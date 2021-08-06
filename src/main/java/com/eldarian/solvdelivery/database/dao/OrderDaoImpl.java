@@ -11,7 +11,7 @@ import java.sql.*;
 
 public class OrderDaoImpl implements OrderDao {
 
-    private static final Logger logger = Logger.getLogger(OrderDaoImpl.class);
+    private static final Logger LOGGER = Logger.getLogger(OrderDaoImpl.class);
 
     public void printAllOrders() {
         String getAllString = "SELECT * FROM orders";
@@ -50,7 +50,7 @@ public class OrderDaoImpl implements OrderDao {
                     "INNER JOIN restaurants \n" +
                     "ON orders.restaurant_id=restaurants.restaurant_id \n" +
                     "\n" +
-                    "WHERE order_id=1");
+                    "WHERE order_id=" + id);
             ResultSet resultSet = statement.executeQuery();
             if (resultSet.next()) {
                 order = extractOrderFromResultSet(resultSet);
@@ -64,15 +64,17 @@ public class OrderDaoImpl implements OrderDao {
     @Override
     public boolean insertOrder(Order order) {
         try (Connection conn = SQLConnector.connect()) {
-            logger.info(order);
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO orders (restaurant_id, dish_id, street, building_number) VALUES (?, ?, ?, ?)");
+            LOGGER.info(order);
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO orders (restaurant_id, dish_id, street, building_number) VALUES (?, ?, ?, ?) RETURNING order_id");
             statement.setInt(1, order.getRestaurant().getId());
             statement.setInt(2, order.getDish().getId());
             statement.setString(3, order.getBuilding().getStreetName());
             statement.setInt(4, order.getBuilding().getBuildingNumber());
 
-            int i = statement.executeUpdate();
-            if(i == 1) {
+            ResultSet resultSet = statement.executeQuery();
+            if(resultSet.next()) {
+                order.setId(resultSet.getInt("order_id"));
+                LOGGER.info("order " + order.getId() + " successfully added");
                 return true;
             }
         } catch (SQLException e) {
@@ -103,7 +105,7 @@ public class OrderDaoImpl implements OrderDao {
 
     private Order extractOrderFromResultSet(ResultSet resultSet) throws SQLException{
         Order order = new Order();
-        order.setId(resultSet.getInt("id"));
+        order.setId(resultSet.getInt("order_id"));
 
         Restaurant restaurant = new Restaurant(
                 resultSet.getInt("restaurant_id"),

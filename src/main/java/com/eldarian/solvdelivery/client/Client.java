@@ -9,7 +9,7 @@ import java.util.Properties;
 import java.util.Scanner;
 
 public class Client {
-    private static Logger logger = Logger.getLogger(Client.class);
+    private static final Logger LOGGER = Logger.getLogger(Client.class);
 
     private Controller controller = new Controller();
 
@@ -23,39 +23,43 @@ public class Client {
 
     public void makeOrder() {
         Order order = controller.generateOrder();
-        logger.info(order);
-        order.saveAsJSON();
+        LOGGER.info(order);
         controller.saveOrder(order);
+        order.saveAsJSON();
     }
 
     public void updateOrder() {
         Order order = controller.generateOrder();
-        logger.info("Choose order id to update:");
+        LOGGER.info("Choose order id to update:");
         Scanner scanner = new Scanner(System.in);
         order.setId(scanner.nextInt());
         boolean isSuccess = controller.updateOrder(order);
-        logger.info(isSuccess?"update successful":"update failed");
+        LOGGER.info(isSuccess?"update successful":"update failed");
     }
 
     public void checkOrder() {
         Scanner scanner = new Scanner(System.in);
-        logger.info("Enter order id to check:");
-        logger.info(controller.getOrder(scanner.nextInt()));
+        LOGGER.info("Enter order id to check:");
+        LOGGER.info(controller.getOrder(scanner.nextInt()));
     }
 
     public void deleteOrder() {
         Scanner scanner = new Scanner(System.in);
-        logger.info("Enter order id to delete:");
+        LOGGER.info("Enter order id to delete:");
 
         boolean isSuccess = controller.deleteOrder(scanner.nextInt());
-        logger.info(isSuccess?"deletion successful":"deletion failed");
+        LOGGER.info(isSuccess?"deletion successful":"deletion failed");
     }
 
     public void sendOrderFromJSON() {
         Scanner scanner = new Scanner(System.in);
-        logger.info("Enter json name/address:");
+        LOGGER.info("Enter json name/address:");
         Order order = Order.readFromJSON(scanner.nextLine());
-        controller.saveOrder(order);
+        if(order.getId()==0) {
+            controller.saveOrder(order);
+        } else {
+            controller.updateOrder(order);
+        }
     }
 
     public void sendOrderFromProperties() {

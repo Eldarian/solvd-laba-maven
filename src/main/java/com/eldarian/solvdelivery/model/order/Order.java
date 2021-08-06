@@ -61,7 +61,7 @@ public class Order {
     public void saveAsJSON() {
         LOGGER.info("Saving to JSON...");
         JsonExecutor jsonExecutor = new JsonExecutor();
-        jsonExecutor.convertPojoToJsonFile(this, "order" + id);
+        jsonExecutor.convertPojoToJsonFile(this, "order" + id + ".json");
     }
 
     public static Order readFromJSON(String pathToFile) {
