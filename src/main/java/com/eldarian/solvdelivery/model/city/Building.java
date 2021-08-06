@@ -3,7 +3,6 @@ package com.eldarian.solvdelivery.model.city;
 import java.util.Objects;
 
 public class Building {
-    private int id;
     private String streetName;
     private int buildingNumber;
 
@@ -16,19 +15,7 @@ public class Building {
         this.buildingNumber = buildingNumber;
     }
 
-    public Building(int id, String streetName, int buildingNumber) {
-        this.id = id;
-        this.streetName = streetName;
-        this.buildingNumber = buildingNumber;
-    }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getStreetName() {
         return streetName;
@@ -40,10 +27,6 @@ public class Building {
     public int getBuildingNumber() {
         return buildingNumber;
     }
-
-//    public Street getStreet() {
-//        return street;
-//    }
 
     @Override
     public String toString() {

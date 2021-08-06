@@ -1,11 +1,12 @@
 package com.eldarian.solvdelivery.database.dao;
 
-import com.eldarian.solvdelivery.database.dto.OrderDto;
+import com.eldarian.solvdelivery.model.order.Order;
 
 public interface OrderDao {
     void printAllOrders();
-    OrderDto getOrderById(int id);
-    boolean insertOrder(OrderDto order);
-    boolean updateOrder(OrderDto order);
+    Order getOrderById(int id);
+    boolean insertOrder(Order order);
+    boolean updateOrder(Order order);
     boolean deleteOrder(int id);
+
 }

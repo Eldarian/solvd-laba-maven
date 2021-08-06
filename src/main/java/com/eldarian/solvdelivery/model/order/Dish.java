@@ -5,8 +5,10 @@ public class Dish {
     private String name;
     private int price;
 
-    public int getPrice() {
-        return price;
+    public Dish(int id, String name, int price) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
     }
 
     public Dish(String name) {
@@ -29,6 +31,10 @@ public class Dish {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public int getPrice() {
+        return price;
     }
 
     public void setPrice(int price) {
